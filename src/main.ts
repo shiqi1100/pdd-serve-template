@@ -6,4 +6,5 @@ import '@/plugins/pdd'
 
 import { initMount } from '@/hooks/wujie-mount'
 
+console.log(window, 'window');
 initMount()

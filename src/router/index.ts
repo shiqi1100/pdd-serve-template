@@ -1,40 +1,38 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 
-import NProgress from 'nprogress'
-import type { RouteRecordRaw } from 'vue-router'
-import 'nprogress/nprogress.css'
+import NProgress from "nprogress";
+import type { RouteRecordRaw } from "vue-router";
+import "nprogress/nprogress.css";
 
 export const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'main',
-    component: () => import('@/views/main-page.vue'),
-    children: [
-      {
-        path: 'childrenOne',
-        name: 'childrenOne',
-        component: () => import('@/views/test-children-router/children-one.vue')
-      }
-    ]
-  }
-]
+    path: "/birth",
+    name: "birth",
+    component: () => import("@/views/worker-birth/worker-birth.vue"),
+  },
+  {
+    path: "/workerBook",
+    name: "workerBook",
+    component: () => import("@/views/address-book/address-book.vue"),
+  },
+];
 
 export function initRouter() {
   const router = createRouter({
-    history: createWebHashHistory(),
+    history: window["__POWERED_BY_WUJIE__"] ? createWebHistory() : createWebHashHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
-      return savedPosition || { top: 0 }
-    }
-  })
+      return savedPosition || { top: 0 };
+    },
+  });
 
   router.beforeEach(() => {
-    NProgress.start()
-  })
+    NProgress.start();
+  });
 
   router.afterEach(() => {
-    NProgress.done()
-  })
+    NProgress.done();
+  });
 
-  return router
+  return router;
 }

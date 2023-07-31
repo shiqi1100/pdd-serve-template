@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "es6",
+    "target": "esnext",
     "useDefineForClassFields": true,
-    "module": "es6",
+    "module": "esnext",
     "lib": ["es6", "dom"],
     "skipLibCheck": true,
     "paths": {

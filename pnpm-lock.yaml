@@ -7,6 +7,9 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0
+  bdsaas-bc:
+    specifier: ^0.0.6
+    version: 0.0.6(aplayer@1.10.1)(axios@1.4.0)(lodash-es@4.17.21)(qs@6.11.2)(vue-draggable-next@2.2.1)(vue-router@4.2.4)(vue@3.3.4)
   blocks-next:
     specifier: 1.0.1-alpha.32
     version: 1.0.1-alpha.32(vue@3.3.4)
@@ -1019,6 +1022,14 @@ packages:
       picomatch: 2.3.1
     dev: true
 
+  /aplayer@1.10.1:
+    resolution: {integrity: sha512-HAfyxgCUTLAqtYlxzzK9Fyqg6y+kZ9CqT1WfeWE8FSzwspT6oBqWOZHANPHF3RGTtC33IsyEgrfthPDzU5r9kQ==}
+    dependencies:
+      balloon-css: 0.5.2
+      promise-polyfill: 7.1.0
+      smoothscroll: 0.4.0
+    dev: false
+
   /argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
@@ -1148,6 +1159,31 @@ packages:
   /balanced-match@2.0.0:
     resolution: {integrity: sha512-1ugUSr8BHXRnK23KfuYS+gVMC3LB8QGH9W1iGtDPsNWoQbgtXSExkBu2aDR4epiGWZOjZsj6lDl/N/AqqTC3UA==}
     dev: true
+
+  /balloon-css@0.5.2:
+    resolution: {integrity: sha512-zheJpzwyNrG4t39vusA67v3BYg1HTVXOF8cErPEHzWK88PEOFwgo6Ea9VHOgOWNMgeuOtFVtB73NE2NWl9uDyQ==}
+    dev: false
+
+  /bdsaas-bc@0.0.6(aplayer@1.10.1)(axios@1.4.0)(lodash-es@4.17.21)(qs@6.11.2)(vue-draggable-next@2.2.1)(vue-router@4.2.4)(vue@3.3.4):
+    resolution: {integrity: sha512-7aJDWsQO+5DD4IUh7zWSeZzvuMUqv7iIbVgZ9hbDzN0Bd4TwQ4L4patKig7QA/6tuaqu/vYbhnHU9MZqALYw/w==}
+    peerDependencies:
+      aplayer: ^1.10.1
+      axios: ^1.4.0
+      lodash-es: ^4.17.21
+      qs: ^6.11.1
+      vue: ^3.2.47
+      vue-draggable-next: ^2.2.1
+      vue-router: ^4.1.6
+    dependencies:
+      aplayer: 1.10.1
+      axios: 1.4.0
+      blocks-next: 1.0.1-alpha.32(vue@3.3.4)
+      lodash-es: 4.17.21
+      qs: 6.11.2
+      vue: 3.3.4
+      vue-draggable-next: 2.2.1(sortablejs@1.15.0)(vue@3.3.4)
+      vue-router: 4.2.4(vue@3.3.4)
+    dev: false
 
   /binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
@@ -3022,6 +3058,10 @@ packages:
     hasBin: true
     dev: true
 
+  /promise-polyfill@7.1.0:
+    resolution: {integrity: sha512-P6NJ2wU/8fac44ENORsuqT8TiolKGB2u0fEClPtXezn7w5cmLIjM/7mhPlTebke2EPr6tmqZbXvnX0TxwykGrg==}
+    dev: false
+
   /proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
@@ -3240,6 +3280,14 @@ packages:
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
     dev: true
+
+  /smoothscroll@0.4.0:
+    resolution: {integrity: sha512-sggQ3U2Un38b3+q/j1P4Y4fCboCtoUIaBYoge+Lb6Xg1H8RTIif/hugVr+ErMtIDpvBbhQfTjtiTeYAfbw1ZGQ==}
+    dev: false
+
+  /sortablejs@1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
+    dev: false
 
   /source-map-js@1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
@@ -3819,6 +3867,16 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
+      vue: 3.3.4
+    dev: false
+
+  /vue-draggable-next@2.2.1(sortablejs@1.15.0)(vue@3.3.4):
+    resolution: {integrity: sha512-EAMS1IRHF0kZO0o5PMOinsQsXIqsrKT1hKmbICxG3UEtn7zLFkLxlAtajcCcUTisNvQ6TtCB5COjD9a1raNADw==}
+    peerDependencies:
+      sortablejs: ^1.14.0
+      vue: ^3.2.2
+    dependencies:
+      sortablejs: 1.15.0
       vue: 3.3.4
     dev: false
 
