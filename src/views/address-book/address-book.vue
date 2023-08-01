@@ -80,7 +80,11 @@ const state = reactive<{
   useItem: {
     userportraitImgUrl: '',
     realName: '',
-    principal: ''
+    mobile: '',
+    departmentPositionCd: '',
+    stateCd: '',
+    gender: 1,
+    fullName: ''
   }
 })
 // 树结构
@@ -96,14 +100,11 @@ const handleNodeClick = (data: Tree) => {
 const openInfo = (item: DataType) => {
   state.useItem = item
   visible.value = true
-
 }
 
 onMounted(async () => {
   state.depTreeData = await getDepTree()
   state.useData = await getUseList()
-  console.log(state.useData, 'state.useData')
-  console.log(state.depTreeData, 'state.depTreeData')
 })
 
 </script>
