@@ -9,7 +9,7 @@ import axios from 'axios'
 import ApiConfig from './ApiConfig'
 // Middleware
 // import RequestMiddleware from '../middlewares/Request'
-import ResponseMiddleware from '../middlewares/ResponseMiddleware'
+import ResponseMiddleware, {IResponse} from '../middlewares/ResponseMiddleware'
 import { useCompanyId, useProfileId, useProfileName, useToken, useXWSSecurity } from '@/hooks/user-info'
 import { permissionExpiration } from '@/utils/axios-http/hooks'
 import { ElMessage } from 'element-plus'
@@ -53,6 +53,8 @@ export default {
       companyId: () => useCompanyId(),
       profileId: () => useProfileId(),
       profileName: () => useProfileName(),
+      token: () => useToken(),
+      COMPANYID: () => useCompanyId()
     }
   },
   /**
@@ -73,18 +75,18 @@ export default {
    * @param response
    * @constructor
    */
-  RESPONSE_MIDDLEWARE: (response: any) => {
+  RESPONSE_MIDDLEWARE: (response: IResponse) => {
     try {
       return new ResponseMiddleware(response).handle((response, next) => {
         // 留给业务处理具体事务
-        console.log('response--此处可删除', response)
-        if (response.data.statusCode === 80001) {
+        const data = response.response.data
+        if (data.rspCode === 80001) {
           permissionExpiration()
           console.log('登录过期了请处理你的业务，清空缓存+跳转啥的')
           throw new Error('80001')
         }
-        if (response.data.statusCode !== 0) {
-          return ElMessage({ message: response.data.msg, type: 'warning' })
+        if (data.rspCode !== 0) {
+          return ElMessage({ message: data?.rspMsg, type: 'warning' })
         }
         next()
       })

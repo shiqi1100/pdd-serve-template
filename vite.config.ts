@@ -30,10 +30,6 @@ export default defineConfig(({ command, mode }) => {
       port: 5188,
       proxy: {
         "/bdsaas": VITE_HOST,
-        "/associate-web": {
-          target: "https://demo.bdsaas.cn",
-          changeOrigin: true,
-        },
       },
     },
     define: {
