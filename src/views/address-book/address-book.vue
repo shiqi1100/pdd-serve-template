@@ -18,7 +18,13 @@
         <bn-input card placeholder="搜索..." suffix-icon="bn-icon-search" size="large" v-model="state.searchName" />
       </div>
       <div class="main-list-content">
-        <div v-if="userList.length" v-for="item in userList" :key="item.ucId" class="main-list-item flex align-center justify-start"  @click="openInfo(item)">
+        <div
+          v-if="userList.length"
+          v-for="item in userList"
+          :key="item.ucId"
+          class="main-list-item flex align-center justify-start"
+          @click="openInfo(item)"
+        >
           <el-avatar :size="48" :src="item.userportraitImgUrl" />
           <div class="ml-12">
             <div class="name">{{ item.realName }}</div>
@@ -86,8 +92,11 @@ const handleNodeClick = async (data: TreeDataType) => {
   }
 }
 
-const getAllUser = async () => {
-  state.useData = await getUseList()
+const getAllUser = () => {
+  getUseList().then((res) => {
+    state.searchName = ''
+    state.useData = res
+  })
 }
 
 const openInfo = (item: DataType) => {
