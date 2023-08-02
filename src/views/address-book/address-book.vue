@@ -18,14 +18,14 @@
         <bn-input card placeholder="搜索..." suffix-icon="bn-icon-search" size="large" v-model="state.searchName" />
       </div>
       <div class="main-list-content">
-        <div v-if="userList.length" v-for="item in userList" :key="item.ucId" class="main-list-item flex align-center justify-start">
+        <div v-if="userList.length" v-for="item in userList" :key="item.ucId" class="main-list-item flex align-center justify-start"  @click="openInfo(item)">
           <el-avatar :size="48" :src="item.userportraitImgUrl" />
           <div class="ml-12">
             <div class="name">{{ item.realName }}</div>
             <div class="phone mt-6">{{ item.mobile }}</div>
           </div>
           <div class="icon">
-            <bn-icon-search :size="22" @click="openInfo(item)" />
+            <bn-icon-search :size="22" />
           </div>
         </div>
         <div v-else class="flex align-center justify-center empty">
