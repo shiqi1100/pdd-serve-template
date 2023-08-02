@@ -63,7 +63,6 @@
 <script setup lang="ts">
 import { getDepTree, getUseList, selectData } from "@/views/address-book/hooks";
 import type {
-  Tree,
   DataType,
   TreeDataType,
   SelectData,
@@ -128,7 +127,9 @@ const filterList = (val: SelectData) => {
 
 onMounted(async () => {
   Promise.all([getDepTree(),getUseList()]).then((res) => {
+    // 组织架构树数据
     state.depTreeData = res[0]
+    // 人员列表数据
     state.useData = res[1]
   })
 });
