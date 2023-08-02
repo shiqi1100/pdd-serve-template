@@ -10,14 +10,9 @@
           {{ state.mobile }}
         </div>
         <div class="fs-18 mb-2">
-          {{ handlerSelect(state.gender, "gender") }}
-          <span>{{ handlerSelect(state.stateCd, "stateCd") }}</span>
-          <span>{{
-              handlerSelect(
-                  state.departmentPositionCd,
-                  "departmentPositionCd"
-              )
-            }}</span>
+          {{ handlerSelect(state.gender, 'gender') }}
+          <span>{{ handlerSelect(state.stateCd, 'stateCd') }}</span>
+          <span>{{ handlerSelect(state.departmentPositionCd, 'departmentPositionCd') }}</span>
         </div>
         <div class="fs-18">
           所在部门：
@@ -28,26 +23,21 @@
   </bn-drawer>
 </template>
 
-<script setup lang='ts'>
-import type {DataType} from "@/views/address-book/hooks";
-import {
-  handlerSelect
-} from "@/views/address-book/hooks";
-const proops = defineProps<{
-  state: DataType
-}>()
-const visible = ref(false);
+<script setup lang="ts">
+  import type { DataType } from '@/views/address-book/hooks'
+  import { handlerSelect } from '@/views/address-book/hooks'
+  const proops = defineProps<{
+    state: DataType
+  }>()
+  const visible = ref(false)
 
-const toggle = (val: boolean) => {
-  return visible.value = val
-}
+  const toggle = (val: boolean) => {
+    return (visible.value = val)
+  }
 
-defineExpose({
-  toggle
-})
-
+  defineExpose({
+    toggle
+  })
 </script>
 
-<style scoped lang='scss'>
-
-</style>
+<style scoped lang="scss"></style>
