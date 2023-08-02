@@ -24,20 +24,20 @@
 </template>
 
 <script setup lang="ts">
-  import type { DataType } from '@/views/address-book/hooks'
-  import { handlerSelect } from '@/views/address-book/hooks'
-  const proops = defineProps<{
-    state: DataType
-  }>()
-  const visible = ref(false)
+import type { DataType } from '@/views/address-book/hooks'
+import { handlerSelect } from '@/views/address-book/hooks'
+const proops = defineProps<{
+  state: DataType
+}>()
+const visible = ref(false)
 
-  const toggle = (val: boolean) => {
-    return (visible.value = val)
-  }
+const toggle = (val: boolean) => {
+  return (visible.value = val)
+}
 
-  defineExpose({
-    toggle
-  })
+defineExpose({
+  toggle
+})
 </script>
 
 <style scoped lang="scss"></style>
