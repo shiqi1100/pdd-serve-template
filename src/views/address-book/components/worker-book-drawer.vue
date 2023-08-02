@@ -1,7 +1,7 @@
 <template>
   <bn-drawer v-model="visible" width="700px" popup-class="no-footer">
     <template #body>
-      <div class="flex align-center justify-center column drawer">
+      <div class="flex-center column drawer">
         <el-avatar :size="200" :src="state.userportraitImgUrl" />
         <div class="fs-29 mt-16 mb-8">
           {{ state.realName }}

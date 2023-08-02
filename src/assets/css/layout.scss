@@ -9,7 +9,7 @@
 html,
 body,
 #app,
-#app > div{
+#app > div {
   width: 100%;
   height: 100%;
   font-size: 14px;
@@ -37,21 +37,29 @@ body,
 .flex {
   display: flex;
 }
+
+@mixin command-flex($justify-content, $flex-direction: row, $align-items: center) {
+  display: flex;
+  flex-direction: $flex-direction;
+  align-items: $align-items;
+  justify-content: $justify-content;
+}
+
+.flex-center {
+  @include command-flex(center);
+}
+.flex-start {
+  @include command-flex(start);
+}
+.flex-around {
+  @include command-flex(space-around);
+}
+.flex-between {
+  @include command-flex(space-between);
+}
+
 .column {
   flex-direction: column;
-
-}
-.align-center {
-  align-items: center;
-
-}
-
-.justify-center {
-  justify-content: center;
-
-}
-.justify-start {
-  justify-content: flex-start;
 }
 
 .no-footer {

@@ -4,11 +4,11 @@
       <div class="main-tree-content">
         <el-tree :data="state.depTreeData" :props="defaultProps" @node-click="handleNodeClick" node-key="id" :default-expanded-keys="[1]" />
       </div>
-      <div class="main-tree-btn flex justify-center align-center">
+      <div class="main-tree-btn flex-center">
         <bn-button block @click="getAllUser">所有人员</bn-button>
       </div>
     </div>
-    <div class="main-select flex column justify-start align-center">
+    <div class="main-select flex-start column ">
       <div v-for="(val, index) in selectData" :key="index" class="selected-item" @click="filterList(val)">
         {{ val }}
       </div>
@@ -22,7 +22,7 @@
           v-if="userList.length"
           v-for="item in userList"
           :key="item.ucId"
-          class="main-list-item flex align-center justify-start"
+          class="main-list-item flex-start"
           @click="openInfo(item)"
         >
           <el-avatar :size="48" :src="item.userportraitImgUrl" />
@@ -34,7 +34,7 @@
             <bn-icon-search :size="22" />
           </div>
         </div>
-        <div v-else class="flex align-center justify-center empty">
+        <div v-else class="flex-center empty">
           <bn-empty> </bn-empty>
         </div>
       </div>
