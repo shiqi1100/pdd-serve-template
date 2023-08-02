@@ -1,112 +1,137 @@
 <template>
   <div class="main flex">
     <div class="main-tree">
-      <el-tree
+      <div class="main-tree-content">
+        <el-tree
           :data="state.depTreeData"
           :props="defaultProps"
           @node-click="handleNodeClick"
           node-key="id"
           :default-expanded-keys="[1]"
-      />
+        />
+      </div>
+      <div class="main-tree-btn flex justify-center align-center">
+        <bn-button block @click="getAllUser">所有人员</bn-button>
+      </div>
     </div>
     <div class="main-select flex column justify-start align-center">
-      <div v-for="(val,index) in selectData" :key="index" class="selected-item">
-        {{val}}
+      <div
+        v-for="(val, index) in selectData"
+        :key="index"
+        class="selected-item"
+        @click="filterList(val)"
+      >
+        {{ val }}
       </div>
     </div>
     <div class="main-list">
       <div>
         <bn-input
-            card
-            placeholder="搜索..."
-            suffix-icon="bn-icon-search"
-            size="large"
+          card
+          placeholder="搜索..."
+          suffix-icon="bn-icon-search"
+          size="large"
+          v-model="state.searchName"
         />
       </div>
       <div class="main-list-content">
-        <div v-for="(item) in state.useData" :key="item.ucId" class="main-list-item flex align-center justify-start">
+        <div
+            v-if="userList.length"
+          v-for="item in userList"
+          :key="item.ucId"
+          class="main-list-item flex align-center justify-start"
+        >
           <el-avatar :size="48" :src="item.userportraitImgUrl" />
           <div class="ml-12">
-            <div class="name">{{item.realName}}</div>
-            <div class="phone mt-6">{{item.mobile}}</div>
+            <div class="name">{{ item.realName }}</div>
+            <div class="phone mt-6">{{ item.mobile }}</div>
           </div>
           <div class="icon">
             <bn-icon-search :size="22" @click="openInfo(item)" />
           </div>
         </div>
+        <div v-else class="flex align-center justify-center empty">
+          <bn-empty> </bn-empty>
+        </div>
       </div>
     </div>
   </div>
-<!--  抽屉-->
-  <bn-drawer
-      v-model="visible"
-      width="700px"
-      popup-class="no-footer"
-  >
-    <template #body>
-      <div class="flex align-center justify-center column drawer">
-        <el-avatar :size="200" :src="state.useItem.userportraitImgUrl" />
-        <div class="fs-29 mt-16 mb-8">
-          {{state.useItem.realName}}
-        </div>
-        <div class="fs-18 mb-16">
-          {{state.useItem.mobile}}
-        </div>
-        <div class="fs-18 mb-2">
-          {{handlerSelect(state.useItem.gender, 'gender')}}
-          <span>{{handlerSelect(state.useItem.stateCd, 'stateCd')}}</span>
-          <span>{{handlerSelect(state.useItem.departmentPositionCd, 'departmentPositionCd')}}</span>
-        </div>
-        <div class="fs-18">
-          所在部门：
-          {{state.useItem.fullName}}
-        </div>
-      </div>
-    </template>
-  </bn-drawer>
+  <!--  抽屉-->
+  <worker-book-drawer ref="drawerRef" :state="state.useItem" />
 </template>
 
 <script setup lang="ts">
-import {getDepTree, getUseList, handlerSelect, selectData} from "@/views/address-book/hooks";
-import type {Tree,DataType,TreeDataType} from "@/views/address-book/hooks";
-const visible = ref(false)
+import { getDepTree, getUseList, selectData } from "@/views/address-book/hooks";
+import type {
+  Tree,
+  DataType,
+  TreeDataType,
+  SelectData,
+} from "@/views/address-book/hooks";
+import WorkerBookDrawer from "@/views/address-book/components/worker-book-drawer.vue";
 const state = reactive<{
-  depTreeData: TreeDataType[]
-  useData: DataType[]
-  useItem: DataType
+  depTreeData: TreeDataType[];
+  useData: DataType[];
+  useItem: DataType;
+  searchName: string;
 }>({
   depTreeData: [],
   useData: [],
+  searchName: "",
   useItem: {
-    userportraitImgUrl: '',
-    realName: '',
-    mobile: '',
-    departmentPositionCd: '',
-    stateCd: '',
+    userportraitImgUrl: "",
+    realName: "",
+    mobile: "",
+    departmentPositionCd: "",
+    stateCd: "",
     gender: 1,
-    fullName: ''
-  }
-})
+    fullName: "",
+    pinyin: "",
+  },
+});
+const drawerRef = ref();
+
+const userList = computed(() => {
+  return state.useData.filter((user) => {
+    return (
+      user.pinyin.toLowerCase().indexOf(state.searchName.toLowerCase()) === 0 ||
+      user.realName.toLowerCase().indexOf(state.searchName.toLowerCase()) !== -1
+    );
+  });
+});
 // 树结构
 const defaultProps = {
-  children: 'children',
-  label: 'label',
-}
+  children: "children",
+  label: "label",
+};
 
-const handleNodeClick = (data: Tree) => {
-  console.log(data, 'data 29')
+const handleNodeClick = async (data: TreeDataType) => {
+  if (data.id === 1) {
+    state.useData = await getUseList();
+  } else {
+    state.useData = await getUseList("", data.id);
+  }
+};
+
+const getAllUser = async () => {
+  state.useData = await getUseList();
 }
 
 const openInfo = (item: DataType) => {
-  state.useItem = item
-  visible.value = true
-}
+  state.useItem = item;
+  drawerRef.value.toggle(true);
+};
+
+const filterList = (val: SelectData) => {
+  state.searchName = val;
+};
 
 onMounted(async () => {
-  state.depTreeData = await getDepTree()
-  state.useData = await getUseList()
-})
-
+  Promise.all([getDepTree(),getUseList()]).then((res) => {
+    state.depTreeData = res[0]
+    state.useData = res[1]
+  })
+});
 </script>
 
 <style scoped lang="scss">
@@ -117,11 +142,21 @@ onMounted(async () => {
 
   &-tree {
     width: 350px;
-    padding: 16px;
     overflow-y: auto;
-    border-right: 1px solid hsla(210,8%,51%,.13);
+    border-right: 1px solid hsla(210, 8%, 51%, 0.13);
     box-sizing: border-box;
 
+    &-content {
+      height: calc(100% - 56px);
+      padding: 16px;
+    }
+
+    &-btn {
+      border-top: 1px solid hsla(210, 8%, 51%, 0.13);
+      height: 56px;
+      box-sizing: border-box;
+      padding: 10px 16px;
+    }
     .el-tree {
       :deep(.el-tree-node > .el-tree-node__content > .el-tree-node__label) {
         font-weight: bold;
@@ -147,12 +182,12 @@ onMounted(async () => {
   &-select {
     width: 40px;
     padding-top: 16px;
-    border-right: 1px solid hsla(210,8%,51%,.13);
+    border-right: 1px solid hsla(210, 8%, 51%, 0.13);
     box-sizing: border-box;
 
     .selected-item {
       color: inherit !important;
-      opacity: .6;
+      opacity: 0.6;
       cursor: pointer;
 
       &:hover {
@@ -167,6 +202,10 @@ onMounted(async () => {
     &-content {
       overflow-y: auto;
       height: 100%;
+
+      .empty {
+        height: 100%;
+      }
 
       .icon {
         margin-left: auto;

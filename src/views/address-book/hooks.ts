@@ -16,10 +16,11 @@ export interface DataType {
   userportraitImgUrl: string;
   realName: string;
   mobile: string;
-    gender: number
-    stateCd: string
-    departmentPositionCd: string
-    fullName: string
+  gender: number;
+  stateCd: string;
+  departmentPositionCd: string;
+  fullName: string;
+  pinyin: string
 }
 
 const select = {
@@ -34,8 +35,8 @@ const select = {
     },
     {
       value: "3",
-      label: "主负责人"
-    }
+      label: "主负责人",
+    },
   ],
   stateCd: [
     {
@@ -52,8 +53,8 @@ const select = {
     },
     {
       value: "4",
-      label: "邀请中"
-    }
+      label: "邀请中",
+    },
   ],
   gender: [
     {
@@ -62,15 +63,17 @@ const select = {
     },
     {
       value: "2",
-      label: "女"
-    }
+      label: "女",
+    },
   ],
 };
 
-type SelectType = keyof typeof select
+type SelectType = keyof typeof select;
 
 export function handlerSelect(value: number | string, type: SelectType) {
-    return select[type]?.filter(i => i?.value === String(value))?.[0]?.label || ''
+  return (
+    select[type]?.filter((i) => i?.value === String(value))?.[0]?.label || ""
+  );
 }
 
 export const selectData = [
@@ -99,8 +102,10 @@ export const selectData = [
   "w",
   "x",
   "y",
-  "z"
+  "z",
 ];
+
+export type SelectData = (typeof selectData)[number];
 
 // 处理部门数据
 function handlerDepTree<T extends Array<any>>(data: T): TreeDataType[] {
@@ -142,7 +147,7 @@ export async function getDepTree() {
   return [];
 }
 // 获取人员列表
-export async function getUseList(realName = "", cdId = "") {
+export async function getUseList(realName = "", cdId:string | number = "") {
   const params = {
     page: 1,
     pagesize: 0,
